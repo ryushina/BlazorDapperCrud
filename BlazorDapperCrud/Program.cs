@@ -10,7 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
-var sqlConnectionConfiguration = new SqlConnectionConfiguration(builder.Configuration["SqlDBcontext"]);
+builder.Services.AddScoped<IVideoService, VideoService>();
+
+var conn = builder.Configuration.GetConnectionString("SqlDBcontext");
+var sqlConnectionConfiguration = new SqlConnectionConfiguration(conn);
 builder.Services.AddSingleton(sqlConnectionConfiguration);
  
 var app = builder.Build();
