@@ -24,8 +24,10 @@ namespace BlazorDapperCrud.Data
                 parameters.Add("DatePublished", video.DatePublished, DbType.Date);
                 parameters.Add("IsActive", video.IsActive, DbType.Boolean);
 
-                const string query = @"INSERT INTO Video(Title,DatePublished,IsActive) VALUES (@Title,@DatePublished,@IsActive)";
-                await conn.ExecuteAsync(query, new { video.Title, video.DatePublished, video.IsActive }, commandType: CommandType.Text);
+                await conn.ExecuteAsync("spVideo_Insert", parameters, commandType: CommandType.StoredProcedure);
+
+                //const string query = @"INSERT INTO Video(Title,DatePublished,IsActive) VALUES (@Title,@DatePublished,@IsActive)";
+                //await conn.ExecuteAsync(query, new { video.Title, video.DatePublished, video.IsActive }, commandType: CommandType.Text);
                 
             }
             return true;

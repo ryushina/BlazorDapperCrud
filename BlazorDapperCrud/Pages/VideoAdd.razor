@@ -14,7 +14,7 @@
         </tr>
          <tr>
             <td>Date Published:</td>
-            <td><input type="date" @bind="video.DatePublished" required/></td>
+            <td><input type="date" @bind="video.DatePublished" required min="1900-01-10" max="2050-12-31"/></td>
         </tr>
          <tr>
             <td>Is Active:</td>
@@ -31,6 +31,13 @@
 
 @code {
     Video video = new Video();
+
+    protected override void OnInitialized()
+    {
+        DateTime defaultdate = new DateTime(2000,12,31);
+        video.DatePublished = defaultdate;
+        video.IsActive = true;
+    }
 
     protected async Task VideoInsert()
     {
