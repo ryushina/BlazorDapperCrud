@@ -1,0 +1,62 @@
+﻿@using BlazorDapperCrud.Data
+@page "/videolist"
+@inject IVideoService VideoService
+
+<h3>VideoList</h3>
+<p style="text-align:center">
+    <a href="/videoadd">Add a video</a>
+</p>
+@if (videos == null)
+{
+    <p style="text-align:center">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </p>
+}
+else
+{
+    <table>
+        <tr>
+            <th>Edit</th>
+            <th>Video Title</th>
+            <th>Date Published</th>
+            <th>Is Active</th>
+        </tr>
+        @foreach (var video in videos)
+        {
+            <tr>
+                <td>
+                    <a href="#">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                </td>
+                <td>
+                    @video.Title
+                </td>
+                <td>
+                    @video.DatePublished
+                </td>
+                <td>
+                    @if (video.IsActive)
+                    {
+                        <span class="glyphicon glyphicon-ok" style="color:green;"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-ok" style="color:red;"></span>
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+
+@code {
+    IEnumerable<Video> videos;
+    protected override async Task OnInitializedAsync()
+    {
+        videos = await VideoService.VideoList();
+    }
+}

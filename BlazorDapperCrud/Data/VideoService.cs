@@ -32,5 +32,17 @@ namespace BlazorDapperCrud.Data
             }
             return true;
         }
+
+        public async Task<IEnumerable<Video>> VideoList()
+        {
+            IEnumerable<Video> videos;
+            using (var conn = new SqlConnection(_configuration.Value))
+            {
+                videos = await conn.QueryAsync<Video>("spVideo_GetAll", commandType: CommandType.StoredProcedure);
+
+            }
+            return videos;
+        }
+
     }
 }

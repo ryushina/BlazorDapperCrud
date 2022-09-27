@@ -11,4 +11,12 @@
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\VideoList.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\VideoList.razor" />
+  </ItemGroup>
+
 </Project>
