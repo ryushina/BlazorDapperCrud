@@ -44,5 +44,37 @@ namespace BlazorDapperCrud.Data
             return videos;
         }
 
+        public async Task<Video> Video_GetOne(int id)
+        {
+            Video video = new Video();
+            var parameters = new DynamicParameters();
+            parameters.Add("Id",id, DbType.Int32);
+            using (var conn = new SqlConnection(_configuration.Value))
+            {
+                video = await conn.QueryFirstOrDefaultAsync<Video>("spVideo_GetOne",parameters, commandType: CommandType.StoredProcedure);
+
+            }
+            return video;
+        }
+
+        public async Task<bool> VideoUpdate(Video video)
+        {
+            using (var conn = new SqlConnection(_configuration.Value))
+            {
+                var parameters = new DynamicParameters();
+                parameters.Add("Title", video.Title, DbType.String);
+                parameters.Add("DatePublished", video.DatePublished, DbType.Date);
+                parameters.Add("IsActive", video.IsActive, DbType.Boolean);
+                parameters.Add("VideoId", video.VideoID, DbType.Int32);
+
+                await conn.ExecuteAsync("spVideo_Update", parameters, commandType: CommandType.StoredProcedure);
+
+                //const string query = @"INSERT INTO Video(Title,DatePublished,IsActive) VALUES (@Title,@DatePublished,@IsActive)";
+                //await conn.ExecuteAsync(query, new { video.Title, video.DatePublished, video.IsActive }, commandType: CommandType.Text);
+
+            }
+            return true;
+        }
+
     }
 }
