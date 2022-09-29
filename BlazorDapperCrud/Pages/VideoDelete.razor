@@ -1,0 +1,60 @@
+﻿@using BlazorDapperCrud.Data;
+
+@page "/videodelete/{id:int}";
+@inject IVideoService VideoService
+@inject NavigationManager NavigationManager
+
+<h3>Delete Video</h3>
+
+    <table>
+        <tr>
+            <td>Video title:</td>
+            <td><input type="text" @bind="video.Title" readonly /></td>
+        </tr>
+        <tr>
+            <td>Date Published:</td>
+            <td><input type="date" @bind="video.DatePublished" required min="1900-01-10" max="2050-12-31" readonly/></td>
+        </tr>
+        <tr>
+            <td>Is Active:</td>
+            <td><input type="checkbox" @bind="video.IsActive" readonly/></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:center">
+                <input type="submit" value="Delete" @onclick="@Delete"/>
+                <input type="button" value="Cancel" @onclick="@Cancel" />
+            </td>
+        </tr>
+    </table>
+
+
+@code {
+    Video video = new Video();
+
+    [Parameter]
+    public int id { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+       
+            video = await VideoService.Video_GetOne(id);   
+    
+        
+    }
+
+    protected async Task Delete()
+    {
+        await VideoService.VideoDelete(video.VideoID);
+        NavigationManager.NavigateTo("/videolist");
+    }
+
+    void Cancel()
+    {
+       
+          NavigationManager.NavigateTo("/videolist");
+    }
+        
+        
+
+}

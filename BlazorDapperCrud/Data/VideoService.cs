@@ -76,5 +76,22 @@ namespace BlazorDapperCrud.Data
             return true;
         }
 
+        public async Task<bool> VideoDelete(int id)
+        {
+            using (var conn = new SqlConnection(_configuration.Value))
+            {
+                var parameters = new DynamicParameters();
+                
+                parameters.Add("Id", id, DbType.Int32);
+
+                await conn.ExecuteAsync("spVideo_Delete", parameters, commandType: CommandType.StoredProcedure);
+
+                //const string query = @"INSERT INTO Video(Title,DatePublished,IsActive) VALUES (@Title,@DatePublished,@IsActive)";
+                //await conn.ExecuteAsync(query, new { video.Title, video.DatePublished, video.IsActive }, commandType: CommandType.Text);
+
+            }
+            return true;
+        }
+
     }
 }

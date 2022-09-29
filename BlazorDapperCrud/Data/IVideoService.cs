@@ -9,5 +9,7 @@
         Task<Video> Video_GetOne(int id);
 
         Task<bool> VideoUpdate(Video video);
+
+        Task<bool> VideoDelete(int id);
     }
 }

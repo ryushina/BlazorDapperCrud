@@ -47,15 +47,10 @@ else
                         <span class="glyphicon glyphicon-ok" style="color:red;"></span>
                     }
                 </td>
-                 <td>
-                    @if (video.IsActive)
-                    {
-                        <span class="glyphicon glyphicon-ok" style="color:green;"></span>
-                    }
-                    else
-                    {
-                        <span class="glyphicon glyphicon-ok" style="color:red;"></span>
-                    }
+                <td>
+                    <a href="/videodelete/@video.VideoID">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
                 </td>
             </tr>
         }
