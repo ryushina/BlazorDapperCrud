@@ -1,0 +1,80 @@
+﻿@using BlazorDapperCrud.Data;
+@page "/videoadd";
+@page "/videoaddedit";
+@page "/videoaddedit/{id:int}";
+@inject IVideoService VideoService
+@inject NavigationManager NavigationManager
+
+<h3>@pagetitle</h3>
+
+<EditForm Model="@video" OnValidSubmit="@VideoSave">
+    <table>
+        <tr>
+            <td>Video title:</td>
+            <td><input type="text" @bind="video.Title" required /></td>
+        </tr>
+        <tr>
+            <td>Date Published:</td>
+            <td><input type="date" @bind="video.DatePublished" required min="1900-01-10" max="2050-12-31" /></td>
+        </tr>
+        <tr>
+            <td>Is Active:</td>
+            <td><input type="checkbox" @bind="video.IsActive" /></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:center">
+                <input type="submit" value="@buttontext" />
+                <input type="button" value="Cancel" @onclick="@Cancel" />
+            </td>
+        </tr>
+    </table>
+</EditForm>
+
+@code {
+    Video video = new Video();
+
+    [Parameter]
+    public int id { get; set; }
+
+    public string pagetitle = "Add a Video";
+    public string buttontext = "Add";
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (id == 0)
+        {
+            DateTime defaultdate = new DateTime(2000, 12, 31);
+            video.DatePublished = defaultdate;
+            video.IsActive = true;
+        }
+        else
+        {
+            video = await VideoService.Video_GetOne(id);
+            pagetitle = "Edit Video";
+            buttontext = "Update";
+        }
+    }
+
+    protected async Task VideoSave()
+    {
+        await VideoService.VideoInsert(video);
+        NavigationManager.NavigateTo("/videolist");
+    }
+
+    async void Cancel()
+    {
+        if (video.VideoID == 0)
+        {
+            await VideoService.VideoInsert(video);
+          
+        }
+        else
+        {
+            await VideoService.VideoUpdate(video);
+        }
+          NavigationManager.NavigateTo("/videolist");
+    }
+        
+        
+
+}

@@ -8,5 +8,7 @@
         public DateTime DatePublished { get; set; }
 
         public bool IsActive { get; set; }
+
+
     }
 }

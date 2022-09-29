@@ -27,7 +27,7 @@ else
         {
             <tr>
                 <td>
-                    <a href="#">
+                    <a href="/videoaddedit/@video.VideoID">
                         <span class="glyphicon glyphicon-pencil"></span>
                     </a>
                 </td>
@@ -38,6 +38,16 @@ else
                     @video.DatePublished
                 </td>
                 <td>
+                    @if (video.IsActive)
+                    {
+                        <span class="glyphicon glyphicon-ok" style="color:green;"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-ok" style="color:red;"></span>
+                    }
+                </td>
+                 <td>
                     @if (video.IsActive)
                     {
                         <span class="glyphicon glyphicon-ok" style="color:green;"></span>
